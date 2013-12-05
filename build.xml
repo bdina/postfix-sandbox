@@ -1,11 +1,27 @@
 <?xml version="1.0"?>
 
+<!-- MILTER TEST PROJECT                                                     -->
+<!--                                                                         -->
+<!--  Project to create a PoC for a Java-based mail filter to integrate      -->
+<!--  with Postfix                                                           -->
 <project name="milter-test" default="compile">
 
-    <property name="SOURCE_DIR" location="src" />
-    <property name="BUILD_DIR" location="bin" />
-    <property name="JAR_DIR" location="${BUILD_DIR}/jar" />
+    <!-- define variables for values used in more than place -->
+    <property name="LIB_DIR"    location="lib"              />
+    <property name="SOURCE_DIR" location="src"              />
+    <property name="BUILD_DIR"  location="bin"              />
+    <property name="JAR_DIR"    location="${BUILD_DIR}/jar" />
 
+    <!-- setup path(s) -->
+    <path id="build-classpath">
+        <fileset dir="${LIB_DIR}">
+            <include name="*.jar" />
+        </fileset>
+
+        <pathelement path="${BUILD_DIR}" />
+    </path>
+
+    <!-- build target directives -->
     <target name="clean" description="remove intermediate files">
         <delete dir="${BUILD_DIR}" />
     </target>
@@ -16,7 +32,9 @@
 
     <target name="compile" description="compile the Java source code to class files">
         <mkdir dir="${BUILD_DIR}/java" />
-        <javac includeantruntime="false" srcdir="${SOURCE_DIR}/java" destdir="${BUILD_DIR}/java" />
+        <javac includeantruntime="false" srcdir="${SOURCE_DIR}/java" destdir="${BUILD_DIR}/java">
+            <classpath refid="build-classpath" />
+        </javac>
     </target>
 
     <target name="jar" depends="compile" description="create a Jar file for the application">
