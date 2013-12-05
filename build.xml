@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<project name="milter-test" default="compile">
+
+    <property name="SOURCE_DIR" location="src" />
+    <property name="BUILD_DIR" location="bin" />
+    <property name="JAR_DIR" location="${BUILD_DIR}/jar" />
+
+    <target name="clean" description="remove intermediate files">
+        <delete dir="${BUILD_DIR}" />
+    </target>
+
+    <target name="clobber" depends="clean" description="remove all artifact files">
+        <delete file="${JAR_DIR}/milter.jar" />
+    </target>
+
+    <target name="compile" description="compile the Java source code to class files">
+        <mkdir dir="${BUILD_DIR}/java" />
+        <javac srcdir="${SOURCE_DIR}/java" destdir="${BUILD_DIR}/java" />
+    </target>
+
+    <target name="jar" depends="compile" description="create a Jar file for the application">
+        <jar destfile="${BUILD_DIR}/jar/milter.jar">
+            <fileset dir="${BUILD_DIR}/java" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main-Class" value="com.dyndns.email.postfix.milter.PostfixMilter" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>
