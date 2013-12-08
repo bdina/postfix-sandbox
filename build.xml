@@ -47,4 +47,8 @@
         </jar>
     </target>
 
+    <target name="run" depends="jar" description="executes the milter program">
+        <java jar="${JAR_DIR}/milter.jar" fork="true"/>
+    </target>
+
 </project>
