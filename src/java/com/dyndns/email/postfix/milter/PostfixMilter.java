@@ -14,7 +14,8 @@ public class PostfixMilter {
         stdin.close ();
     }
 
-    private static MimeMessage parseMessage ( final InputStream in_stream ) throws Exception {
+    private static MimeMessage parseMessage ( final InputStream in_stream )
+            throws Exception {
         final Session mail_session = Session.getDefaultInstance ( new Properties () );
         final MimeMessage message = new MimeMessage ( mail_session, in_stream );
         return message;

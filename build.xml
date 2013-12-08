@@ -42,6 +42,7 @@
             <fileset dir="${BUILD_DIR}/java" includes="**/*.class" />
             <manifest>
                 <attribute name="Main-Class" value="com.dyndns.email.postfix.milter.PostfixMilter" />
+                <attribute name="Class-Path" value="${LIB_DIR}/javax.mail.jar" />
             </manifest>
         </jar>
     </target>
