@@ -9,6 +9,7 @@
     <!-- define variables for values used in more than place -->
     <property name="LIB_DIR"    location="lib"              />
     <property name="SOURCE_DIR" location="src"              />
+    <property name="TEST_DIR"   location="test"             />
     <property name="BUILD_DIR"  location="bin"              />
     <property name="JAR_DIR"    location="${BUILD_DIR}/jar" />
 
@@ -37,6 +38,13 @@
         </javac>
     </target>
 
+    <target name="compile-test" depends="compile" description="compile the Java test source code to class files">
+        <mkdir dir="${BUILD_DIR}/java" />
+        <javac includeantruntime="false" srcdir="${TEST_DIR}/java" destdir="${BUILD_DIR}/java">
+            <classpath refid="build-classpath" />
+        </javac>
+    </target>
+
     <target name="jar" depends="compile" description="create a Jar file for the application">
         <jar destfile="${BUILD_DIR}/jar/milter.jar">
             <fileset dir="${BUILD_DIR}/java" includes="**/*.class" />
@@ -49,6 +57,10 @@
 
     <target name="run" depends="jar" description="executes the milter program">
         <java jar="${JAR_DIR}/milter.jar" fork="true"/>
+    </target>
+
+    <target name="run-test" depends="compile-test" description="executes the milter program tests">
+        <java dir="${BUILD_DIR}/java" classname="com.dyndns.email.postfix.milter.PostfixMilterTest" fork="true" />
     </target>
 
 </project>
