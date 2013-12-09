@@ -1,0 +1,16 @@
+From bdina@postfix  Sun Dec  8 20:10:24 2013
+Return-Path: <bdina@postfix>
+X-Original-To: bdina@localhost
+Delivered-To: bdina@localhost
+Received: from postfix (localhost [127.0.0.1])
+    by postfix (Postfix) with ESMTP id BD2D642DA3
+    for <bdina@localhost>; Sun,  8 Dec 2013 20:10:24 -0500 (EST)
+Date: Sun, 08 Dec 2013 20:10:24 -0500
+To: bdina@localhost
+From: bdina@postfix
+Subject: test Sun, 08 Dec 2013 20:10:24 -0500
+X-Mailer: swaks v20130209.0 jetmore.org/john/code/swaks/
+Message-Id: <20131209011024.BD2D642DA3@postfix>
+
+This is a test mailing
+
