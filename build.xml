@@ -6,12 +6,18 @@
 <!--  with Postfix                                                           -->
 <project name="milter-test" default="compile">
 
+    <!-- local defines -->
+    <property file="local.properties"/>
+
     <!-- define variables for values used in more than place -->
     <property name="LIB_DIR"    location="lib"              />
     <property name="SOURCE_DIR" location="src"              />
     <property name="TEST_DIR"   location="test"             />
     <property name="BUILD_DIR"  location="bin"              />
     <property name="JAR_DIR"    location="${BUILD_DIR}/jar" />
+
+    <property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar"/>
+    <property name="scala-reflect.jar" value="${scala.home}/lib/scala-reflect.jar"/>
 
     <!-- setup path(s) -->
     <path id="build-classpath">
@@ -20,7 +26,19 @@
         </fileset>
 
         <pathelement path="${BUILD_DIR}" />
+
+        <pathelement location="${scala-library.jar}"/>
+        <pathelement location="${scala-reflect.jar}"/>
     </path>
+
+    <!-- Scala taskdef -->
+    <taskdef resource="scala/tools/ant/antlib.xml">
+      <classpath>
+        <pathelement location="${scala.home}/lib/scala-compiler.jar"/>
+        <pathelement location="${scala-library.jar}"/>
+        <pathelement location="${scala-reflect.jar}"/>
+      </classpath>
+    </taskdef>
 
     <!-- build target directives -->
     <target name="clean" description="remove intermediate files">
@@ -53,6 +71,12 @@
                 <attribute name="Class-Path" value="${LIB_DIR}/javax.mail.jar" />
             </manifest>
         </jar>
+    </target>
+
+    <target name="scala-client" depends="compile" description="build scala client program">
+        <scalac srcdir="${TEST_DIR}/scala" destdir="${BUILD_DIR}" deprecation="yes" unchecked="yes" >
+            <classpath refid="build-classpath"/>
+        </scalac>
     </target>
 
     <target name="run" depends="jar" description="executes the milter program">
